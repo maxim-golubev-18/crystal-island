@@ -1,0 +1,6 @@
+export const PHASE_MS=300000,DAY_MS=600000,AWAKE_LIMIT=1200000;
+export const ranks=[{name:'Нуб',cost:0,pay:10},{name:'Повседневный',cost:20,pay:15},{name:'Работник',cost:60,pay:20},{name:'Работник месяца',cost:150,pay:50},{name:'Работник дня',cost:360,pay:100},{name:'Управляющий',cost:900,pay:1000}];
+export function cleanCareer(v={},now=Date.now()){return {rank:Number.isInteger(v?.rank)&&v.rank>=0&&v.rank<ranks.length?v.rank:0,epoch:Number.isFinite(v?.epoch)&&v.epoch<=now?v.epoch:now,lastDay:Number.isInteger(v?.lastDay)&&v.lastDay>=0?v.lastDay:0,awake:Number.isFinite(v?.awake)?Math.max(0,Math.min(AWAKE_LIMIT,v.awake)):0,worked:v?.worked===true,missPay:v?.missPay===true,warnings:Number.isInteger(v?.warnings)?Math.max(0,v.warnings):0};}
+export function worldTime(s,now){const elapsed=Math.max(0,now-s.epoch);return {night:Math.floor(elapsed/PHASE_MS)%2===1,day:Math.floor(elapsed/DAY_MS),left:PHASE_MS-elapsed%PHASE_MS};}
+export function settleDay(s,now){const day=worldTime(s,now).day;if(day<=s.lastDay)return 0;const salary=s.worked&&!s.missPay?ranks[s.rank].pay:0;s.lastDay=day;s.worked=false;s.missPay=false;return salary;}
+export function promote(s,wallet){const next=ranks[s.rank+1];if(!next||wallet.coins<next.cost)return false;wallet.coins-=next.cost;s.rank++;return true;}
