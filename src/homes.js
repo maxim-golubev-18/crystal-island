@@ -43,7 +43,7 @@ export function setupHomes({scene,avatar,camera,controls,keys,root}){
  function exit(){if(!inside)return;originalScene.add(avatar);const h=houses[visiting];avatar.position.set(h.x,.86,h.z+3.5);inside=false;const geometries=new Set(),materials=new Set();room.traverse(o=>{if(o.geometry)geometries.add(o.geometry);if(o.material)materials.add(o.material)});geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());room=null;switcher.hidden=false;focus(h.x,h.z+3);}
  function enter(index){keys.clear();visiting=index;room=makeRoom(index);room.add(avatar);avatar.position.set(0,.2,3.7);avatar.rotation.y=Math.PI;inside=true;switcher.hidden=true;focus(0,0,true);}
  function nearby(){return houses.findIndex(h=>Math.hypot(avatar.position.x-h.x,avatar.position.z-(h.z+3.2))<3.2)}
- function interact(){if(dialog.open||chosen===null)return;if(inside)exit();else{const i=nearby();if(i>=0)enter(i)}}action.onclick=interact;
+ function interact(){if(document.querySelector("dialog[open]")||chosen===null)return;if(inside)exit();else{const i=nearby();if(i>=0)enter(i)}}action.onclick=interact;
  addEventListener('keydown',e=>{if(e.code==='KeyE'&&!e.repeat){e.preventDefault();interact()}});
  avatar.visible=false;openPicker();
  return {get scene(){return room||originalScene},get inside(){return inside},get blocked(){return dialog.open||chosen===null},canWalk:canWalkInside,
