@@ -8,3 +8,22 @@
 #career-dialog{width:650px;max-width:calc(100vw - 28px);max-height:calc(100dvh - 28px);overflow:auto;border:1px solid #ffffff50;border-radius:24px;padding:24px;background:#163f4b;color:#fff}#career-dialog::backdrop{background:#122f3cb0}#career-info{line-height:1.5;color:#d0e3e5}#career-hud{position:absolute;left:38px;top:292px;background:#173f4de8;padding:10px 14px;border-radius:13px;font-size:13px}#career-close{width:100%;margin-top:18px}#sleep-overlay{position:fixed;inset:0;z-index:20;background:#122239f5;display:grid;place-items:center;text-align:center;padding:30px;font-size:24px;line-height:1.6}.tools{max-width:65%}header{max-width:32%}@media(max-width:700px){header{max-width:none}.tools{max-width:none;top:95px}.tools button{font-size:11px;padding:7px;min-height:38px}#my-house{top:275px}#life-hud{top:315px}#job-status{top:354px}#career-hud{left:20px;top:401px;font-size:12px}}
 @media(max-width:700px){#my-house{display:none}#life-hud{top:226px}#career-hud{top:263px}#job-status{top:300px;font-size:11px}.product-row{flex-wrap:wrap}#career-ranks>button{margin:4px}}
 #conversation{width:540px;max-width:calc(100vw - 28px);max-height:calc(100dvh - 28px);overflow:auto;border:1px solid #ffffff50;border-radius:25px;background:#153e49;color:#fff;padding:27px}#conversation::backdrop{background:#102d3b99;backdrop-filter:blur(3px)}#speaker-name{font-size:30px;margin:12px 0}#speaker-text{font-size:17px;line-height:1.65;background:#ffffff0d;border-radius:14px;padding:17px;margin:16px 0}#conversation-choices{display:grid;gap:9px}#conversation-choices button{text-align:left;font-size:15px}#conversation-close{margin-top:18px;width:100%;background:#edc680;color:#153e49;font-size:16px}#talk-prompt{position:absolute;right:25px;bottom:145px;background:#e8c582;color:#173e48;font-size:15px;font-weight:bold}@media(max-width:700px){#talk-prompt{right:15px;bottom:183px;max-width:90%;font-size:13px}#conversation{padding:20px}#speaker-text{font-size:16px}}
+
+/* All island actions share one collapsible, keyboard-accessible menu. */
+#game{--drawer-width:min(300px,calc(100vw - 74px))}
+#action-drawer{position:absolute;z-index:12;right:12px;top:20px;bottom:20px;width:var(--drawer-width);box-sizing:border-box;padding:22px 16px;overflow-y:auto;overscroll-behavior:contain;background:linear-gradient(155deg,#164c51f5,#12343ff5);border:1px solid #b7fff04d;border-radius:24px;box-shadow:0 16px 50px #062d4055;backdrop-filter:blur(22px);transform:translateX(calc(100% + 16px));visibility:hidden;transition:transform .24s ease,visibility .24s;pointer-events:none}
+.menu-open #action-drawer{transform:translateX(0);visibility:visible;pointer-events:auto}
+.drawer-heading{padding:2px 6px 16px;color:#f1fff9}
+.drawer-heading>span{font-size:10px;letter-spacing:2px;color:#b8e9d1;font-weight:700}
+.drawer-heading h2{font-size:24px;margin:8px 0}
+.drawer-heading p{font-size:12px;margin:0;color:#c0ddd9}
+#action-drawer .tools{position:static;inset:auto;display:grid;grid-template-columns:1fr;gap:8px;max-width:none;width:100%}
+#action-drawer .tools button{text-align:left;font-size:15px;min-height:46px;padding:12px 14px;width:100%;background:#ffffff0d;border-color:#c5ffef30;border-radius:13px;box-sizing:border-box}
+#action-drawer .tools button:hover{background:#ffffff20}
+#action-drawer .tools #day{opacity:1;color:#ffe8a3;background:#ffd27712;border-color:#ffe7a334;cursor:default}
+#menu-toggle{position:absolute;z-index:13;right:0;top:45%;width:52px;min-height:80px;padding:8px 3px;border-radius:18px 0 0 18px;background:#174c51ef;box-shadow:0 8px 25px #082f4040;transition:right .24s ease;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+#menu-toggle span{font-size:36px;line-height:32px}
+#menu-toggle small{font-size:10px}
+.menu-open #menu-toggle{right:calc(var(--drawer-width) + 12px)}
+@media(max-width:700px){#action-drawer{top:12px;bottom:12px;padding:18px 12px}#life-hud{top:102px}#career-hud{top:144px}#job-status{top:181px}}
+@media(prefers-reduced-motion:reduce){#action-drawer,#menu-toggle{transition:none}}
