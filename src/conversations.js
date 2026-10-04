@@ -5,7 +5,7 @@ export function setupConversations({root,avatar,homeSystem,career,jobs,keys}){
  const dialog=document.createElement('dialog');dialog.id='conversation';dialog.setAttribute('aria-labelledby','speaker-name');dialog.innerHTML='<span id="speaker-role" class="eyebrow"></span><h2 id="speaker-name"></h2><p id="speaker-text" role="status" aria-live="polite"></p><div id="conversation-choices"></div><button id="conversation-close">До встречи!</button>';root.append(dialog);
  const prompt=document.createElement('button');prompt.id='talk-prompt';prompt.hidden=true;root.append(prompt);let current=null;
  function available(){return homeSystem.chosen!==null&&!homeSystem.inside&&!career.sleeping&&!document.querySelector('dialog[open]')}
- function nearest(){return people.map(p=>({p,d:Math.hypot(p.model.position.x-avatar.position.x,p.model.position.z-avatar.position.z)})).filter(v=>v.d<3.3).sort((a,b)=>a.d-b.d)[0]?.p??null;}
+ function nearest(){return people.filter(p=>p.model.visible).map(p=>({p,d:Math.hypot(p.model.position.x-avatar.position.x,p.model.position.z-avatar.position.z)})).filter(v=>v.d<3.3).sort((a,b)=>a.d-b.d)[0]?.p??null;}
  function say(text){dialog.querySelector('#speaker-text').textContent=text}
  function choice(label,fn){const b=document.createElement('button');b.textContent=label;b.onclick=fn;dialog.querySelector('#conversation-choices').append(b)}
  function open(person){if(!available())return;current=person;keys.clear();person.model.rotation.y=Math.atan2(avatar.position.x-person.model.position.x,avatar.position.z-person.model.position.z);dialog.querySelector('#speaker-name').textContent=person.name;dialog.querySelector('#speaker-role').textContent=person.role;dialog.querySelector('#conversation-choices').replaceChildren();
@@ -30,5 +30,5 @@ export function setupConversations({root,avatar,homeSystem,career,jobs,keys}){
  dialog.showModal();}
  prompt.onclick=()=>{const p=nearest();if(p)open(p)};dialog.querySelector('#conversation-close').onclick=()=>{dialog.close();keys.clear()};dialog.addEventListener('cancel',()=>keys.clear());
  addEventListener('keydown',e=>{if(e.code==='KeyF'&&!e.repeat&&available()){const p=nearest();if(p){e.preventDefault();open(p)}}});jobs.onTalk=()=>open(people[0]);
- return {get open(){return dialog.open},update(){const p=available()?nearest():null;prompt.hidden=!p;if(p)prompt.textContent=`Поговорить: ${p.name} · F`;if(dialog.open&&(career.sleeping||homeSystem.inside))dialog.close()}};
+ return {get open(){return dialog.open},get speaker(){return dialog.open?current?.model:null},update(){const p=available()?nearest():null;prompt.hidden=!p;if(p)prompt.textContent=`Поговорить: ${p.name} · F`;if(dialog.open&&(career.sleeping||homeSystem.inside))dialog.close()}};
 }
