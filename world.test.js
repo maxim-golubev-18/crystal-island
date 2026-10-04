@@ -1,0 +1,2 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import {canWalk,locationName} from './src/world.js';
+test('берег удерживает игрока на острове',()=>{assert.equal(canWalk(0,0),true);assert.equal(canWalk(25,0),false)});test('через пруд можно пройти по мосту',()=>{assert.equal(canWalk(10,4),false);assert.equal(canWalk(10,6),true)});test('дом нельзя пройти насквозь',()=>assert.equal(canWalk(-10,-9),false));test('места имеют названия',()=>assert.equal(locationName(10,6),'Пруд светлячков'));
