@@ -8,6 +8,7 @@ export const homeStyles=[
  {name:'Лавандовый',detail:'Сиреневые подушки и полка с книгами',color:0xb293c1},
 ];
 export const furniture=[
+ {x:-1.7,z:-3.8,w:.65,d:.65}, // bedside table
  {x:-3.7,z:-2.4,w:2.7,d:4.1}, // bed
  {x:3.7,z:-3.25,w:3.1,d:1.5}, // desk
  {x:3.6,z:-2.2,w:.85,d:.8}, // desk stool

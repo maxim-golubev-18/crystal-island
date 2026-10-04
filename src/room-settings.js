@@ -1,0 +1,2 @@
+export function defaultRoom(index){return {bed:index%2?'right':'left',flowers:[2,3,2,1,1,3,2][index]??1,honey:index===0||index===4?3:0};}
+export function cleanRoom(value,index){const defaults=defaultRoom(index);return {bed:['left','right'].includes(value?.bed)?value.bed:defaults.bed,flowers:Number.isInteger(value?.flowers)&&value.flowers>=0&&value.flowers<=3?value.flowers:defaults.flowers,honey:Number.isInteger(value?.honey)&&value.honey>=0&&value.honey<=3?value.honey:defaults.honey};}
