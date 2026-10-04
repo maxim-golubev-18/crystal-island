@@ -1,4 +1,15 @@
+import {ponds,houses,groves,onBridge} from './layout.js';
 export const MAP_SCALE = Math.sqrt(5);
 export const RADIUS = 23 * MAP_SCALE;
-export function canWalk(x,z){return x*x+z*z<(RADIUS-1.5)**2 && !(x>4&&x<15&&z>1&&z<11&&Math.abs(z-6)>1.5) && !(x>-13&&x<-7&&z>-12&&z<-6)}
-export function locationName(x,z){if(Math.hypot(x,z)>25)return z<0?'Большой сосновый лес':z>25?'Дальний берег':'Цветочные поляны';if(x>4&&x<17&&z>0&&z<12)return 'Пруд светлячков';if(z<-6&&x<0)return 'Дом у соснового леса';if(z>11)return 'Тихий берег';return 'Кристальная площадь'}
+export function canWalk(x,z){
+ if(x*x+z*z>=(RADIUS-1.5)**2)return false;
+ if(houses.some(h=>Math.abs(x-h.x)<2.85&&Math.abs(z-h.z)<2.55))return false;
+ return !ponds.some(p=>((x-p.x)/(p.rx+.3))**2+((z-p.z)/(p.rz+.3))**2<1&&!onBridge(x,z,p));
+}
+export function locationName(x,z){
+ const pond=ponds.find(p=>Math.hypot(x-p.x,z-p.z)<p.rx+3);if(pond)return pond.name;
+ if(groves.some(g=>Math.hypot(x-g.x,z-g.z)<4))return 'Кристальная полянка';
+ if(houses.some(h=>Math.hypot(x-h.x,z-h.z)<6))return 'Лесные домики';
+ if(Math.hypot(x,z)>25)return z<0?'Большой сосновый лес':z>25?'Дальний берег':'Цветочные поляны';
+ return 'Кристальная площадь';
+}
